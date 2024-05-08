@@ -1,0 +1,27 @@
+{"countries.0": "USA", "imdb.rating": {$gte: 5}}
+{title:1, countries:1, "imdb.rating" : 1, "_id" : 0}
+{"imdb.rating" : -1}
+
+
+
+db.users.find({email: {$regex: /.com/}}, {name:1, email:1, _id:0})
+
+
+
+
+db.movies.aggregate([{$match: {year: {$gt: 1950}}}, {$group:{_id: "$rated", average: {$avg: "$runtime"}}}])
+
+
+
+
+Match (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE m.released > 1960
+return p.name as `szereplő`, m.title as `filmcím`, m.released as `megjelenés`
+ORDER BY m.released DESC
+
+
+Match (p:Person)-[:DIRECTED]->(m:Movie)
+WHERE m.released < 2000
+WITH p.name as `nev`, COUNT(*) as `db`
+WHERE db > 1
+RETURN nev, db
